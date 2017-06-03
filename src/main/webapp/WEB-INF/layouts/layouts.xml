@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <definition name="default-template" template="/WEB-INF/layouts/default.jsp">
+        <put-attribute name="title" value="ShortLinks-XML"/>
+        <put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
+        <put-list-attribute name="scripts">
+            <add-attribute value="/resources/libraries/jquery-3.2.1.min.js"/>
+            <add-attribute value="/resources/libraries/bootstrap/js/bootstrap.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="links">
+            <add-attribute value="/resources/libraries/bootstrap/css/bootstrap.css"/>
+        </put-list-attribute>
+    </definition>
+
+    <definition name="start-page" extends="default-template">
+        <put-attribute name="body" value="/WEB-INF/views/index.jsp"/>
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/resources/libraries/bootstrap-tagsinput.min.js"/>
+            <add-attribute value="/resources/scripts/index.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="auth/login">
+        <put-attribute name="body" value="/WEB-INF/views/auth/login.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="auth/signup">
+        <put-attribute name="body" value="/WEB-INF/views/auth/signup.jsp"/>
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/resources/scripts/signup.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="errors/403">
+        <put-attribute name="body" value="/WEB-INF/views/errors/403.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="errors/404">
+        <put-attribute name="body" value="/WEB-INF/views/errors/404.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="urls/edit">
+        <put-attribute name="body" value="/WEB-INF/views/urls/edit.jsp"/>
+        <put-list-attribute name="scripts" inherit="true">
+            <add-attribute value="/resources/scripts/edit.js"/>
+            <add-attribute value="/resources/libraries/bootstrap-tagsinput.min.js"/>
+        </put-list-attribute>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="urls/info">
+        <put-attribute name="body" value="/WEB-INF/views/urls/info.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="urls/links">
+        <put-attribute name="body" value="/WEB-INF/views/urls/links.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="urls/statistics">
+        <put-attribute name="body" value="/WEB-INF/views/urls/statistics.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+    <definition extends="default-template" name="urls/tags">
+        <put-attribute name="body" value="/WEB-INF/views/urls/tags.jsp"/>
+        <put-list-attribute name="scripts" inherit="true"/>
+        <put-list-attribute name="links" inherit="true"/>
+    </definition>
+
+</tiles-definitions>
