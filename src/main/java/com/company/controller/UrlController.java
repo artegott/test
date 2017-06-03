@@ -8,6 +8,7 @@ import com.company.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,18 +36,20 @@ public class UrlController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Url> add(@RequestBody Url url) {
-        return new ResponseEntity<>(urlService.add(url), HttpStatus.CREATED);
+        urlService.save(url);
+        return new ResponseEntity<>(url, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ResponseEntity<Url> edit(@RequestBody Url url) {
-        return new ResponseEntity<>(urlService.edit(url), HttpStatus.OK);
+        urlService.update(url);
+        return new ResponseEntity<>(url, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Url>> get() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Url> links = urlService.getByUser(userService.getByLogin(user.getUsername()));
+        List<Url> links = urlService.findByUser(userService.findByLogin(user.getUsername()));
         return new ResponseEntity<>(links, HttpStatus.FOUND);
     }
 
@@ -63,8 +67,8 @@ public class UrlController {
 
     @RequestMapping(value = "/links")
     public String links(Model uiModel) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Url> links = urlService.getByUser(userService.getByLogin(user.getUsername()));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        List<Url> links = urlService.findByUser(userService.findByLogin(auth.getName()));
         uiModel.addAttribute("urls", links);
         return "urls/links";
     }

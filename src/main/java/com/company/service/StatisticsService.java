@@ -5,12 +5,14 @@ import com.company.entity.Statistics;
 
 public interface StatisticsService {
 
-    Statistics add(Statistics statistics);
+    void save(Statistics statistics);
 
-    void delete(long id);
+    void delete(Long id);
 
-    Statistics edit(Statistics statistics);
+    void update(Statistics statistics);
 
-    Statistics getByUrlId(Long urlId);
+    Statistics findById(Long id);
+
+    Statistics findByUrlId(Long id);
 
 }

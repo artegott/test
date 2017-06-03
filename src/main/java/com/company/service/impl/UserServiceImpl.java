@@ -4,10 +4,8 @@ import com.company.entity.Role;
 import com.company.entity.User;
 import com.company.entity.UserRole;
 import com.company.repository.UserRepository;
-import com.company.service.UserRoleService;
 import com.company.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -21,26 +19,20 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
-    private final UserRoleService roleService;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder, @Qualifier("userRoleService") UserRoleService roleService) {
+    public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
-        this.roleService = roleService;
     }
 
 
     @Override
-    public User add(User user) {
+    public void save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
-        user = repository.saveAndFlush(user);
-        Role role = new Role();
-        role.setRole(UserRole.ROLE_USER);
-        role.setUser(user);
-        roleService.add(role);
-        return user;
+        user.setRole(new Role(user, UserRole.ROLE_USER));
+        repository.save(user);
     }
 
     @Override
@@ -49,22 +41,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User edit(User user) {
-        return repository.saveAndFlush(user);
+    public void update(User user) {
+        repository.save(user);
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User findByLogin(String login) {
         return repository.getOne(login);
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public boolean exist(String login) {
+    public boolean exists(String login) {
         return repository.exists(login);
     }
 }

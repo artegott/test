@@ -7,14 +7,16 @@ import java.util.List;
 
 public interface TagService {
 
-    Tag add(Tag tag);
+    void save(Tag tag);
 
-    void delete(long id);
+    void delete(Long id);
 
-    Tag edit(Tag tag);
+    void update(Tag tag);
+
+    Tag findById(Long id);
 
     Tag findByName(String name);
 
-    List<Tag> getAll();
+    List<Tag> findAll();
 
 }

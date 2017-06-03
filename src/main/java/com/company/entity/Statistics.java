@@ -7,9 +7,8 @@ import javax.persistence.*;
 @Entity
 public class Statistics {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @JsonIgnore
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "url_id", nullable = false)

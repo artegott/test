@@ -48,8 +48,7 @@ public class MainController {
                     } else {
                         statistics.setCountPcClick(statistics.getCountPcClick() + 1);
                     }
-                    statisticsService.edit(statistics);
-                    urlService.edit(url);
+                    statisticsService.update(statistics);
                     String longUrl = url.getLongUrl();
                     response.sendRedirect(longUrl);
                 } else {

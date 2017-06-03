@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "user")
 public class User {
     @Id
     @Column(name = "user_name", unique = true, nullable = false, length = 45)
@@ -15,7 +14,7 @@ public class User {
     private Boolean enabled;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
     private Set<Url> urls;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Role role;
 
     public User() {

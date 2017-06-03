@@ -7,10 +7,9 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "url")
 public class Url {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String description;
@@ -18,11 +17,11 @@ public class Url {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_name")
     private User user;
-    @Column(nullable = false)
+    @Column(name = "long_url", nullable = false)
     private String longUrl;
-    @Column(nullable = false, unique = true)
+    @Column(name = "short_url", nullable = false, unique = true)
     private String shortUrl;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "url_tag", joinColumns = @JoinColumn(name = "url_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private Set<Tag> tags;

@@ -10,18 +10,20 @@ import java.util.Set;
 
 public interface UrlService {
 
-    Url add(Url url);
+    void save(Url url);
 
-    void delete(long id);
+    void delete(Long id);
 
-    Url edit(Url url);
+    void update(Url url);
 
     Url getByShortUrl(String shortUrl);
 
-    List<Url> getAll();
+    List<Url> findAll();
 
-    List<Url> getByUser(User user);
+    Url findById(Long id);
 
-    List<Url> getByTags(Set<Tag> tags);
+    List<Url> findByUser(User user);
+
+    List<Url> findByTags(Set<Tag> tags);
 
 }

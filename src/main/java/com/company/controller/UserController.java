@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -24,15 +23,16 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> add(@RequestBody User user) {
-        if (userService.exist(user.getLogin())) {
+        if (userService.exists(user.getLogin())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(userService.add(user), HttpStatus.CREATED);
+        userService.save(user);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{userName}", method = RequestMethod.GET)
     public User getUser(@PathVariable String userName) {
-        User user = userService.getByLogin(userName);
+        User user = userService.findByLogin(userName);
         if (user != null) {
             return user;
         } else return new User();
@@ -40,7 +40,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAll() {
-        return new ResponseEntity<>(userService.getAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
 }

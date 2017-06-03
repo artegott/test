@@ -20,18 +20,23 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public Role add(Role role) {
-        return repository.saveAndFlush(role);
+    public void save(Role role) {
+        repository.save(role);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         repository.delete(id);
     }
 
     @Override
-    public Role edit(Role role) {
-        return repository.saveAndFlush(role);
+    public void update(Role role) {
+        repository.save(role);
+    }
+
+    @Override
+    public Role findById(Long id) {
+        return repository.findOne(id);
     }
 
 }

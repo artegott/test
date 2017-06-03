@@ -5,10 +5,12 @@ import com.company.entity.Role;
 
 public interface UserRoleService {
 
-    Role add(Role role);
+    void save(Role role);
 
-    void delete(long id);
+    void delete(Long id);
 
-    Role edit(Role role);
+    void update(Role role);
+
+    Role findById(Long id);
 
 }

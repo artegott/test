@@ -5,20 +5,22 @@ import com.company.entity.Tag;
 import com.company.entity.Url;
 import com.company.entity.User;
 import com.company.repository.UrlRepository;
-import com.company.service.StatisticsService;
 import com.company.service.TagService;
 import com.company.service.UrlService;
 import com.company.service.UserService;
 import com.company.service.generator.ShortUrlGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 @Service(value = "urlService")
@@ -27,62 +29,48 @@ public class UrlServiceImpl implements UrlService {
 
     private final UrlRepository repository;
     private final UserService userService;
-    private final StatisticsService statisticsService;
     private final TagService tagService;
     private final ShortUrlGenerator shortUrlGenerator;
+    private final Logger logger = LoggerFactory.getLogger(UrlServiceImpl.class);
 
     @Autowired
-    public UrlServiceImpl(UrlRepository repository, UserService userService, StatisticsService statisticsService, TagService tagService, ShortUrlGenerator shortUrlGenerator) {
+    public UrlServiceImpl(UrlRepository repository, UserService userService, TagService tagService, ShortUrlGenerator shortUrlGenerator) {
         this.repository = repository;
         this.userService = userService;
-        this.statisticsService = statisticsService;
         this.tagService = tagService;
         this.shortUrlGenerator = shortUrlGenerator;
     }
 
     @Override
-    public Url add(Url url) {
+    public void save(Url url) {
         url.setShortUrl(shortUrlGenerator.generate());
-        Set<Tag> tags = new HashSet<>();
-        HashSet<Url> urlList = new HashSet<>();
-        urlList.add(url);
+        url.setStatistics(new Statistics(url, 0L, 0L, 0L));
         for (Tag tag : url.getTags()) {
-            tag.setUrls(urlList);
-            tags.add(tagService.add(tag));
+            tag.setUrls(Stream.of(url).collect(Collectors.toSet()));
+            tagService.save(tag);
         }
-        url.setTags(tags);
-        Statistics statistics = new Statistics();
-        statistics.setUrl(url);
-        url.setStatistics(statistics);
         try {
             org.springframework.security.core.userdetails.User user = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            url.setUser(userService.getByLogin(user.getUsername()));
+            url.setUser(userService.findByLogin(user.getUsername()));
         } catch (ClassCastException exc) {
             url.setUser(null);
         }
-        statisticsService.add(statistics);
-        return repository.saveAndFlush(url);
+        repository.save(url);
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(Long id) {
         repository.delete(id);
     }
 
     @Override
-    public Url edit(Url url) {
-        Url link = getByShortUrl(url.getShortUrl());
-        link.setName(url.getName());
-        link.setDescription(url.getDescription());
-        Set<Tag> tags = new HashSet<>();
-        HashSet<Url> urlList = new HashSet<>();
-        urlList.add(link);
-        for (Tag tag : url.getTags()) {
-            tag.setUrls(urlList);
-            tags.add(tagService.add(tag));
+    public void update(Url url) {
+        Url existingUrl = findById(url.getId());
+        if (existingUrl != null) {
+            repository.save(existingUrl);
+        } else {
+            logger.error(String.format("The object %s doesn't exist", url));
         }
-        link.setTags(tags);
-        return repository.saveAndFlush(link);
     }
 
     @Override
@@ -91,17 +79,22 @@ public class UrlServiceImpl implements UrlService {
     }
 
     @Override
-    public List<Url> getAll() {
+    public List<Url> findAll() {
         return repository.findAll();
     }
 
     @Override
-    public List<Url> getByUser(User user) {
+    public Url findById(Long id) {
+        return repository.findOne(id);
+    }
+
+    @Override
+    public List<Url> findByUser(User user) {
         return repository.findByUser(user);
     }
 
     @Override
-    public List<Url> getByTags(Set<Tag> tags) {
+    public List<Url> findByTags(Set<Tag> tags) {
         return repository.findByTags(tags);
     }
 
