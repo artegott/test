@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div>
-        <a href="<c:url value="/urls/links"/>"><span class="glyphicon glyphicon-arrow-left"></span> back to my links</a>
+        <a href="<c:url value="/urls/list"/>"><span class="glyphicon glyphicon-arrow-left"></span> back to my links</a>
         <br/>
 
         <div class="table-responsive">

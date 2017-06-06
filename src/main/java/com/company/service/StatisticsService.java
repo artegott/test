@@ -5,11 +5,9 @@ import com.company.entity.Statistics;
 
 public interface StatisticsService {
 
-    void save(Statistics statistics);
+    Statistics save(Statistics statistics);
 
     void delete(Long id);
-
-    void update(Statistics statistics);
 
     Statistics findById(Long id);
 

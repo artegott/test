@@ -26,8 +26,7 @@ public class UserController {
         if (userService.exists(user.getLogin())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        userService.save(user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/{userName}", method = RequestMethod.GET)

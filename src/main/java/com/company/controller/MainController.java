@@ -5,6 +5,8 @@ import com.company.entity.Statistics;
 import com.company.entity.Url;
 import com.company.service.StatisticsService;
 import com.company.service.UrlService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -14,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/s/{shortUrl}")
 public class MainController {
     private final UrlService urlService;
     private final StatisticsService statisticsService;
+    private final Logger log = LoggerFactory.getLogger(MainController.class);
 
     @Autowired
     public MainController(UrlService urlService, StatisticsService statisticsService) {
@@ -30,34 +31,32 @@ public class MainController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public void redirect(@PathVariable String shortUrl, HttpServletResponse response, HttpServletRequest request) {
+    public String redirect(@PathVariable String shortUrl, HttpServletRequest request) {
         Device device = DeviceUtils.getCurrentDevice(request);
-        try {
-            if (!shortUrl.isEmpty()) {
-                Url url = urlService.getByShortUrl("s/" + shortUrl);
-                if (url != null) {
-                    Statistics statistics = url.getStatistics();
-                    if (device != null) {
-                        if (device.isNormal()) {
-                            statistics.setCountPcClick(statistics.getCountPcClick() + 1);
-                        } else if (device.isMobile()) {
-                            statistics.setCountMobileClick((statistics.getCountMobileClick() + 1));
-                        } else if (device.isTablet()) {
-                            statistics.setCountTabletClick(statistics.getCountTabletClick() + 1);
-                        }
-                    } else {
+        if (!shortUrl.isEmpty()) {
+            Url url = urlService.getByShortUrl("s/" + shortUrl);
+            log.info(String.format("Device [%s], URL object is %s", device, url));
+            if (url != null) {
+                Statistics statistics = url.getStatistics();
+                if (device != null) {
+                    if (device.isNormal()) {
                         statistics.setCountPcClick(statistics.getCountPcClick() + 1);
+                    } else if (device.isMobile()) {
+                        statistics.setCountMobileClick((statistics.getCountMobileClick() + 1));
+                    } else if (device.isTablet()) {
+                        statistics.setCountTabletClick(statistics.getCountTabletClick() + 1);
                     }
-                    statisticsService.update(statistics);
-                    String longUrl = url.getLongUrl();
-                    response.sendRedirect(longUrl);
                 } else {
-                    response.sendRedirect("/404");
+                    statistics.setCountPcClick(statistics.getCountPcClick() + 1);
                 }
+                statisticsService.save(statistics);
+                String longUrl = url.getLongUrl();
+                return String.format("redirect:%s", longUrl);
             } else {
-                response.sendRedirect("/404");
+                return "errors/404";
             }
-        } catch (IOException ignored) {
+        } else {
+            return "errors/404";
         }
     }
 }

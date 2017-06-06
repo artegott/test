@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,14 +35,12 @@ public class UrlController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Url> add(@RequestBody Url url) {
-        urlService.save(url);
-        return new ResponseEntity<>(url, HttpStatus.CREATED);
+        return new ResponseEntity<>(urlService.save(url), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ResponseEntity<Url> edit(@RequestBody Url url) {
-        urlService.update(url);
-        return new ResponseEntity<>(url, HttpStatus.OK);
+        return new ResponseEntity<>(urlService.save(url), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -65,12 +62,12 @@ public class UrlController {
         return "errors/404";
     }
 
-    @RequestMapping(value = "/links")
+    @RequestMapping(value = "/list")
     public String links(Model uiModel) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Url> links = urlService.findByUser(userService.findByLogin(auth.getName()));
         uiModel.addAttribute("urls", links);
-        return "urls/links";
+        return "urls/list";
     }
 
     @RequestMapping(value = "/edit")

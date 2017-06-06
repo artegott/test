@@ -1,27 +1,18 @@
-package com.company.service;
+package com.company.repository.sql;
 
 
 import com.company.entity.Tag;
 import com.company.entity.Url;
 import com.company.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Set;
 
-public interface UrlService {
-
-    Url save(Url url);
-
-    void delete(Long id);
-
-    Url getByShortUrl(String shortUrl);
-
-    List<Url> findAll();
-
-    Url findById(Long id);
+public interface UrlRepository extends JpaRepository<Url, Long> {
+    Url findByShortUrl(String shortUrl);
 
     List<Url> findByUser(User user);
 
     List<Url> findByTags(Set<Tag> tags);
-
 }

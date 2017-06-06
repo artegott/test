@@ -1,8 +1,10 @@
 package com.company.service.impl;
 
 import com.company.entity.Role;
-import com.company.repository.UserRoleRepository;
+import com.company.repository.sql.UserRoleRepository;
 import com.company.service.UserRoleService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserRoleServiceImpl implements UserRoleService {
     private final UserRoleRepository repository;
+    private final Logger log = LoggerFactory.getLogger(UserRoleServiceImpl.class);
 
     @Autowired
     public UserRoleServiceImpl(UserRoleRepository repository) {
@@ -20,8 +23,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public void save(Role role) {
-        repository.save(role);
+    public Role save(Role role) {
+        return repository.save(role);
     }
 
     @Override
@@ -30,14 +33,8 @@ public class UserRoleServiceImpl implements UserRoleService {
     }
 
     @Override
-    public void update(Role role) {
-        repository.save(role);
-    }
-
-    @Override
     public Role findById(Long id) {
         return repository.findOne(id);
     }
 
 }
-

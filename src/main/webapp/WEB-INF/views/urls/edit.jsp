@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <input id="tagsHidden" type="hidden" value="${tags}">
 <div>
-    <a href="<c:url value="/urls/links"/>"><span class="glyphicon glyphicon-arrow-left"></span> back to my links</a>
+    <a href="<c:url value="/urls/list"/>"><span class="glyphicon glyphicon-arrow-left"></span> back to my links</a>
     <br/>
 
     <div id="successful_edit" class="alert alert-success" align="center">

@@ -3,8 +3,10 @@ package com.company.service.impl;
 import com.company.entity.Role;
 import com.company.entity.User;
 import com.company.entity.UserRole;
-import com.company.repository.UserRepository;
+import com.company.repository.sql.UserRepository;
 import com.company.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
@@ -19,6 +21,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     public UserServiceImpl(UserRepository repository, PasswordEncoder passwordEncoder) {
@@ -26,23 +29,17 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
     @Override
-    public void save(User user) {
+    public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);
         user.setRole(new Role(user, UserRole.ROLE_USER));
-        repository.save(user);
+        return repository.save(user);
     }
 
     @Override
     public void delete(String login) {
         repository.delete(login);
-    }
-
-    @Override
-    public void update(User user) {
-        repository.save(user);
     }
 
     @Override

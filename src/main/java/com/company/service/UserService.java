@@ -7,11 +7,9 @@ import java.util.List;
 
 public interface UserService {
 
-    void save(User user);
+    User save(User user);
 
     void delete(String login);
-
-    void update(User user);
 
     User findByLogin(String login);
 

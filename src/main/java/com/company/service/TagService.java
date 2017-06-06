@@ -7,11 +7,9 @@ import java.util.List;
 
 public interface TagService {
 
-    void save(Tag tag);
+    Tag save(Tag tag);
 
     void delete(Long id);
-
-    void update(Tag tag);
 
     Tag findById(Long id);
 

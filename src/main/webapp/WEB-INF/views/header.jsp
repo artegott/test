@@ -8,7 +8,7 @@
         </div>
         <ul class="nav navbar-nav">
             <sec:authorize access="isAuthenticated()">
-                <li><a href="<c:url value="/urls/links"/>">Links</a></li>
+                <li><a href="<c:url value="/urls/list"/>">Links</a></li>
             </sec:authorize>
             <li><a href="#">Help</a></li>
         </ul>

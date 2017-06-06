@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "tag")
 public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +14,7 @@ public class Tag {
     @Column(nullable = false, unique = true)
     private String name;
     @JsonIgnore
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
     private Set<Url> urls;
 
     public Tag() {

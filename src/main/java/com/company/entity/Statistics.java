@@ -5,12 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "statistics")
 public class Statistics {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonIgnore
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "url_id", nullable = false)
     private Url url;
     @Column(name = "pc_click", nullable = false)

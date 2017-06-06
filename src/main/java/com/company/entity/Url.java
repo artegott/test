@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
+@Table(name = "url")
 public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,18 +15,18 @@ public class Url {
     private String name;
     private String description;
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_name")
     private User user;
     @Column(name = "long_url", nullable = false)
     private String longUrl;
     @Column(name = "short_url", nullable = false, unique = true)
     private String shortUrl;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "url_tag", joinColumns = @JoinColumn(name = "url_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"))
     private Set<Tag> tags;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "url")
+    @OneToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, mappedBy = "url")
     private Statistics statistics;
 
     public Url() {

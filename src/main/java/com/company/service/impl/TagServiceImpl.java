@@ -1,9 +1,10 @@
 package com.company.service.impl;
 
 import com.company.entity.Tag;
-import com.company.repository.TagRepository;
+import com.company.repository.sql.TagRepository;
 import com.company.service.TagService;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
 
     private final TagRepository repository;
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(TagServiceImpl.class);
+    private final Logger log = LoggerFactory.getLogger(TagServiceImpl.class);
+
 
     @Autowired
     public TagServiceImpl(TagRepository repository) {
@@ -25,30 +27,18 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public void save(Tag tag) {
+    public Tag save(Tag tag) {
         Tag existingTag = findByName(tag.getName());
         if (existingTag != null) {
             existingTag.getUrls().add(tag.getUrls().iterator().next());
-            repository.save(existingTag);
-        } else {
-            logger.error(String.format("The object %s doesn't exist", tag));
+            return repository.save(existingTag);
         }
+        return repository.save(tag);
     }
 
     @Override
     public void delete(Long id) {
         repository.delete(id);
-    }
-
-    @Override
-    public void update(Tag tag) {
-        Tag existingTag = findByName(tag.getName());
-        if (existingTag != null) {
-            existingTag.setUrls(tag.getUrls());
-            repository.save(existingTag);
-        } else {
-            logger.error(String.format("The object %s doesn't exist", tag));
-        }
     }
 
     @Override

@@ -66,8 +66,8 @@
         <put-list-attribute name="links" inherit="true"/>
     </definition>
 
-    <definition extends="default-template" name="urls/links">
-        <put-attribute name="body" value="/WEB-INF/views/urls/links.jsp"/>
+    <definition extends="default-template" name="urls/list">
+        <put-attribute name="body" value="/WEB-INF/views/urls/list.jsp"/>
         <put-list-attribute name="scripts" inherit="true"/>
         <put-list-attribute name="links" inherit="true"/>
     </definition>
