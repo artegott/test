@@ -1,10 +1,10 @@
 package com.company.service.impl;
 
-import com.company.entity.Statistics;
-import com.company.entity.Tag;
-import com.company.entity.Url;
-import com.company.entity.User;
-import com.company.repository.sql.UrlRepository;
+import com.company.persistence.entity.Statistics;
+import com.company.persistence.entity.Tag;
+import com.company.persistence.entity.Url;
+import com.company.persistence.entity.User;
+import com.company.persistence.repository.UrlRepository;
 import com.company.service.TagService;
 import com.company.service.UrlService;
 import com.company.service.UserService;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -60,7 +61,9 @@ public class UrlServiceImpl implements UrlService {
             if (url.getUser() == null) {
                 try {
                     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                    url.setUser(userService.findByLogin(authentication.getName()));
+                    if (userService.exists(authentication.getName())) {
+                        url.setUser(userService.findByLogin(authentication.getName()));
+                    }
                 } catch (ClassCastException exc) {
                     url.setUser(null);
                 }

@@ -11,6 +11,8 @@
         </div>
     </c:if>
 
+    <p>${firstName}</p>
+
     <div class="jumbotron" style="background-color: lightgray" align="center">
         <form role="form" action="<c:url value="/login"/>" method="post" class="form-horizontal">
             <div class="form-group form-group-lg">

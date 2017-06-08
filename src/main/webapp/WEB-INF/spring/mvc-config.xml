@@ -11,8 +11,6 @@
     <mvc:view-controller path="/" view-name="start-page"/>
     <mvc:view-controller path="/home" view-name="start-page"/>
     <mvc:view-controller path="/login" view-name="auth/login"/>
-    <mvc:view-controller path="/signup" view-name="auth/signup"/>
-    <mvc:view-controller path="/urls/list" view-name="urls/list"/>
     <mvc:view-controller path="/404" view-name="errors/404"/>
     <mvc:view-controller path="/403" view-name="errors/403"/>
 

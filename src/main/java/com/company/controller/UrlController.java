@@ -1,8 +1,8 @@
 package com.company.controller;
 
 
-import com.company.entity.Tag;
-import com.company.entity.Url;
+import com.company.persistence.entity.Tag;
+import com.company.persistence.entity.Url;
 import com.company.service.UrlService;
 import com.company.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +66,9 @@ public class UrlController {
     public String links(Model uiModel) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Url> links = urlService.findByUser(userService.findByLogin(auth.getName()));
+        com.company.persistence.entity.User user = new com.company.persistence.entity.User();
         uiModel.addAttribute("urls", links);
+        uiModel.addAttribute("user", user);
         return "urls/list";
     }
 

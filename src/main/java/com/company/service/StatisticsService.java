@@ -1,7 +1,7 @@
 package com.company.service;
 
 
-import com.company.entity.Statistics;
+import com.company.persistence.entity.Statistics;
 
 public interface StatisticsService {
 

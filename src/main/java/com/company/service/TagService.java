@@ -1,7 +1,7 @@
 package com.company.service;
 
 
-import com.company.entity.Tag;
+import com.company.persistence.entity.Tag;
 
 import java.util.List;
 

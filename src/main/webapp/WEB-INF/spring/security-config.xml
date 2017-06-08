@@ -16,7 +16,6 @@
         <security:intercept-url pattern="/urls/edit/**" method="POST" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/statistics/**" method="GET" access="hasRole('ROLE_USER')"/>
         <security:intercept-url pattern="/users/**" method="GET" access="hasRole('ROLE_USER')"/>
-
         <security:form-login
                 login-page="/login"
                 default-target-url="/home"

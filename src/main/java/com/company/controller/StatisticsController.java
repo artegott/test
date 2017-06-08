@@ -1,8 +1,8 @@
 package com.company.controller;
 
 
-import com.company.entity.Statistics;
-import com.company.entity.Url;
+import com.company.persistence.entity.Statistics;
+import com.company.persistence.entity.Url;
 import com.company.service.UrlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class StatisticsController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showStatistics(@RequestParam(name = "url", required = false, defaultValue = "") String shortUrl, Model model) {
+    public String showStatistics(@RequestParam(name = "url", defaultValue = "") String shortUrl, Model model) {
         if (!shortUrl.isEmpty()) {
             Url url = urlService.getByShortUrl(shortUrl);
             if (url != null) {

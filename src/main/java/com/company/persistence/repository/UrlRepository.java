@@ -1,9 +1,9 @@
-package com.company.repository.sql;
+package com.company.persistence.repository;
 
 
-import com.company.entity.Tag;
-import com.company.entity.Url;
-import com.company.entity.User;
+import com.company.persistence.entity.Url;
+import com.company.persistence.entity.Tag;
+import com.company.persistence.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

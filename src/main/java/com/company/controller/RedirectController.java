@@ -1,8 +1,8 @@
 package com.company.controller;
 
 
-import com.company.entity.Statistics;
-import com.company.entity.Url;
+import com.company.persistence.entity.Statistics;
+import com.company.persistence.entity.Url;
 import com.company.service.StatisticsService;
 import com.company.service.UrlService;
 import org.slf4j.Logger;
@@ -19,13 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/s/{shortUrl}")
-public class MainController {
+public class RedirectController {
     private final UrlService urlService;
     private final StatisticsService statisticsService;
-    private final Logger log = LoggerFactory.getLogger(MainController.class);
+    private final Logger log = LoggerFactory.getLogger(RedirectController.class);
 
     @Autowired
-    public MainController(UrlService urlService, StatisticsService statisticsService) {
+    public RedirectController(UrlService urlService, StatisticsService statisticsService) {
         this.urlService = urlService;
         this.statisticsService = statisticsService;
     }
@@ -50,13 +50,9 @@ public class MainController {
                     statistics.setCountPcClick(statistics.getCountPcClick() + 1);
                 }
                 statisticsService.save(statistics);
-                String longUrl = url.getLongUrl();
-                return String.format("redirect:%s", longUrl);
-            } else {
-                return "errors/404";
+                return String.format("redirect:%s", url.getLongUrl());
             }
-        } else {
-            return "errors/404";
         }
+        return "errors/404";
     }
 }

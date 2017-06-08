@@ -1,7 +1,7 @@
 package com.company.controller;
 
 
-import com.company.entity.Tag;
+import com.company.persistence.entity.Tag;
 import com.company.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class TagController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String showUrlsByTag(@RequestParam(name = "tag", required = false, defaultValue = "") String tagName, Model model) {
+    public String showUrlsByTag(@RequestParam(name = "tag", defaultValue = "") String tagName, Model model) {
         if (!tagName.isEmpty()) {
             Tag tag = tagService.findByName(tagName);
             if (tag != null) {

@@ -1,7 +1,7 @@
 package com.company.service;
 
 
-import com.company.entity.User;
+import com.company.persistence.entity.User;
 
 import java.util.List;
 

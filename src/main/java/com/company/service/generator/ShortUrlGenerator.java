@@ -13,9 +13,12 @@ public class ShortUrlGenerator {
         size = DEFAULT_SIZE;
     }
 
-    public ShortUrlGenerator(String letters, short size) {
-        this.letters = letters;
+    public void setSize(short size) {
         this.size = size;
+    }
+
+    public void setLetters(String letters) {
+        this.letters = letters;
     }
 
     public String generate() {

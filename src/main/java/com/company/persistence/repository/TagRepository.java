@@ -1,6 +1,6 @@
-package com.company.repository.sql;
+package com.company.persistence.repository;
 
-import com.company.entity.Tag;
+import com.company.persistence.entity.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TagRepository extends JpaRepository<Tag, Long> {

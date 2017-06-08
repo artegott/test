@@ -1,7 +1,7 @@
 package com.company.service;
 
 
-import com.company.entity.Role;
+import com.company.persistence.entity.Role;
 
 public interface UserRoleService {
 

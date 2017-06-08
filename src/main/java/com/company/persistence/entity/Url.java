@@ -1,4 +1,4 @@
-package com.company.entity;
+package com.company.persistence.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

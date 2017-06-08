@@ -14,7 +14,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <sec:authorize access="!isAuthenticated()">
-                <li><a href="<c:url value="/signup"/>"><span class="glyphicon glyphicon-user"></span>Sign up</a></li>
+                <li><a href="<c:url value="/register"/>"><span class="glyphicon glyphicon-user"></span>Sign up</a></li>
                 <li><a href="<c:url value="/login"/>"><span class="glyphicon glyphicon-log-in"></span>Log in</a></li>
             </sec:authorize>
             <sec:authorize access="isAuthenticated()">

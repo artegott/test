@@ -1,7 +1,7 @@
 package com.company.service.impl;
 
-import com.company.entity.Tag;
-import com.company.repository.sql.TagRepository;
+import com.company.persistence.entity.Tag;
+import com.company.persistence.repository.TagRepository;
 import com.company.service.TagService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

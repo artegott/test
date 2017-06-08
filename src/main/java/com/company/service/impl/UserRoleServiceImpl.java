@@ -1,7 +1,7 @@
 package com.company.service.impl;
 
-import com.company.entity.Role;
-import com.company.repository.sql.UserRoleRepository;
+import com.company.persistence.entity.Role;
+import com.company.persistence.repository.UserRoleRepository;
 import com.company.service.UserRoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

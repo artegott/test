@@ -1,7 +1,7 @@
 package com.company.service.impl;
 
-import com.company.entity.Statistics;
-import com.company.repository.sql.StatisticsRepository;
+import com.company.persistence.entity.Statistics;
+import com.company.persistence.repository.StatisticsRepository;
 import com.company.service.StatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

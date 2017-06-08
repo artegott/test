@@ -1,7 +1,7 @@
 package com.company.controller;
 
 
-import com.company.entity.User;
+import com.company.persistence.entity.User;
 import com.company.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,8 @@ public class UserController {
         User user = userService.findByLogin(userName);
         if (user != null) {
             return user;
-        } else return new User();
+        }
+        return new User();
     }
 
     @RequestMapping(method = RequestMethod.GET)

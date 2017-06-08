@@ -1,9 +1,9 @@
 package com.company.service;
 
 
-import com.company.entity.Tag;
-import com.company.entity.Url;
-import com.company.entity.User;
+import com.company.persistence.entity.Tag;
+import com.company.persistence.entity.Url;
+import com.company.persistence.entity.User;
 
 import java.util.List;
 import java.util.Set;

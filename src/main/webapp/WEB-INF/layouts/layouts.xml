@@ -31,10 +31,10 @@
         <put-list-attribute name="links" inherit="true"/>
     </definition>
 
-    <definition extends="default-template" name="auth/signup">
-        <put-attribute name="body" value="/WEB-INF/views/auth/signup.jsp"/>
+    <definition extends="default-template" name="auth/register">
+        <put-attribute name="body" value="/WEB-INF/views/auth/register.jsp"/>
         <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/resources/scripts/signup.js"/>
+            <add-attribute value="/resources/libraries/bootstrap-tagsinput.min.js"/>
         </put-list-attribute>
         <put-list-attribute name="links" inherit="true"/>
     </definition>
