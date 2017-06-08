@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -22,14 +20,14 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @GetMapping(value = "/register")
     public String showRegisterPage(Model model) {
         model.addAttribute("user", new UserDto());
         return "auth/register";
     }
 
-    @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
-    public String addUser(@Valid @ModelAttribute("user") UserDto user, BindingResult result, Model model) {
+    @PostMapping(value = "/registerProcess")
+    public String addUser(@ModelAttribute("user") @Valid UserDto user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "auth/register";
         }

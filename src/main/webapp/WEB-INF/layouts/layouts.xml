@@ -3,12 +3,11 @@
         "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-
     <definition name="default-template" template="/WEB-INF/layouts/default.jsp">
         <put-attribute name="title" value="ShortLinks-XML"/>
         <put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
         <put-list-attribute name="scripts">
-            <add-attribute value="/resources/libraries/jquery-3.2.1.min.js"/>
+            <add-attribute value="/resources/libraries/jquery/jquery-3.2.1.min.js"/>
             <add-attribute value="/resources/libraries/bootstrap/js/bootstrap.js"/>
         </put-list-attribute>
         <put-list-attribute name="links">
@@ -19,10 +18,11 @@
     <definition name="start-page" extends="default-template">
         <put-attribute name="body" value="/WEB-INF/views/index.jsp"/>
         <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/resources/libraries/bootstrap-tagsinput.min.js"/>
-            <add-attribute value="/resources/scripts/index.js"/>
+            <add-attribute value="/resources/libraries/bootstrap-tags-input/bootstrap-tagsinput.js"/>
         </put-list-attribute>
-        <put-list-attribute name="links" inherit="true"/>
+        <put-list-attribute name="links" inherit="true">
+            <add-attribute value="/resources/libraries/bootstrap-tags-input/bootstrap-tagsinput.css"/>
+        </put-list-attribute>
     </definition>
 
     <definition extends="default-template" name="auth/login">
@@ -33,9 +33,7 @@
 
     <definition extends="default-template" name="auth/register">
         <put-attribute name="body" value="/WEB-INF/views/auth/register.jsp"/>
-        <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/resources/libraries/bootstrap-tagsinput.min.js"/>
-        </put-list-attribute>
+        <put-list-attribute name="scripts" inherit="true"/>
         <put-list-attribute name="links" inherit="true"/>
     </definition>
 
@@ -54,10 +52,11 @@
     <definition extends="default-template" name="urls/edit">
         <put-attribute name="body" value="/WEB-INF/views/urls/edit.jsp"/>
         <put-list-attribute name="scripts" inherit="true">
-            <add-attribute value="/resources/scripts/edit.js"/>
-            <add-attribute value="/resources/libraries/bootstrap-tagsinput.min.js"/>
+            <add-attribute value="/resources/libraries/bootstrap-tags-input/bootstrap-tagsinput.js"/>
         </put-list-attribute>
-        <put-list-attribute name="links" inherit="true"/>
+        <put-list-attribute name="links" inherit="true">
+            <add-attribute value="/resources/libraries/bootstrap-tags-input/bootstrap-tagsinput.css"/>
+        </put-list-attribute>
     </definition>
 
     <definition extends="default-template" name="urls/info">
