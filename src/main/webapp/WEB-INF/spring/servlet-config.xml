@@ -15,6 +15,6 @@
     <contex:annotation-config/>
 
     <bean id="shortUrlGenerator" class="com.company.service.generator.ShortUrlGenerator"
-    p:letters="abcdefg" p:size="10"/>
+          p:letters="abcdefg" p:size="10"/>
 
 </beans>

@@ -36,7 +36,7 @@ public class UrlController {
     }
 
     @PostMapping
-    public String add(@ModelAttribute("url") @Valid UrlDto urlDto, BindingResult result, Model model) {
+    public String add(@ModelAttribute("url") @Valid UrlDto urlDto, BindingResult result) {
         if (result.hasErrors()) {
             return "start-page";
         }
@@ -49,23 +49,28 @@ public class UrlController {
         }
         url.setTags(tags);
         url.setLongUrl(urlDto.getLongUrl());
-        model.addAttribute("shortUtl", urlService.save(url).getShortUrl());
+        urlDto.setShortUrl(urlService.save(url).getShortUrl());
         return "start-page";
     }
 
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ResponseEntity<Url> edit(@RequestBody Url url) {
-        return new ResponseEntity<>(urlService.save(url), HttpStatus.OK);
+    @PostMapping(value = "/edit")
+    public String edit(@ModelAttribute("url") UrlDto urlDto, Model model) {
+        Url url = new Url();
+        url.setName(urlDto.getName());
+        url.setDescription(urlDto.getDescription());
+        Set<Tag> tags = new HashSet<>();
+        for (String s : urlDto.getTags().split(",")) {
+            tags.add(new Tag(s, null));
+        }
+        url.setTags(tags);
+        url.setLongUrl(urlDto.getLongUrl());
+        url.setShortUrl(urlDto.getShortUrl());
+        urlService.save(url);
+        model.addAttribute("success", "Data saved!");
+        return "urls/edit";
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Url>> get() {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        List<Url> links = urlService.findByUser(userService.findByLogin(user.getUsername()));
-        return new ResponseEntity<>(links, HttpStatus.FOUND);
-    }
-
-    @RequestMapping(value = "/info")
+    @GetMapping(value = "/info")
     public String info(@RequestParam(name = "url", required = false, defaultValue = "") String shortUrl, Model model) {
         if (!shortUrl.isEmpty()) {
             Url link = urlService.getByShortUrl(shortUrl);
@@ -77,7 +82,7 @@ public class UrlController {
         return "errors/404";
     }
 
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/list")
     public String links(Model uiModel) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         List<Url> links = urlService.findByUser(userService.findByLogin(auth.getName()));
@@ -87,12 +92,12 @@ public class UrlController {
         return "urls/list";
     }
 
-    @RequestMapping(value = "/edit")
-    public String edit(@RequestParam(name = "url", required = false, defaultValue = "") String shortUrl, Model model) {
+    @GetMapping(value = "/edit")
+    public String edit(@RequestParam(name = "url") String shortUrl, Model model) {
         if (!shortUrl.isEmpty()) {
-            Url link = urlService.getByShortUrl(shortUrl);
-            if (link != null) {
-                model.addAllAttributes(getLinkAttributes(link));
+            Url url = urlService.getByShortUrl(shortUrl);
+            if (url != null) {
+                model.addAllAttributes(getLinkAttributes(url));
                 return "urls/edit";
             }
         }
@@ -101,14 +106,17 @@ public class UrlController {
 
     private HashMap<String, Object> getLinkAttributes(Url link) {
         HashMap<String, Object> attributes = new HashMap<>();
-        attributes.put("shortUrl", link.getShortUrl());
-        attributes.put("name", link.getName());
-        attributes.put("description", link.getDescription());
+        UrlDto urlDto = new UrlDto();
+        urlDto.setName(link.getName());
+        urlDto.setDescription(link.getDescription());
+        urlDto.setLongUrl(link.getLongUrl());
         StringBuilder tags = new StringBuilder();
         for (Tag tag : link.getTags()) {
-            tags.append(tag.getName()).append(" ");
+            tags.append(tag.getName()).append(",");
         }
-        attributes.put("tags", tags);
+        urlDto.setTags(tags.toString());
+        urlDto.setShortUrl(link.getShortUrl());
+        attributes.put("url", urlDto);
         return attributes;
     }
 

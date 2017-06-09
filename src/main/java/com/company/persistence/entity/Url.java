@@ -14,7 +14,6 @@ public class Url {
     private Long id;
     private String name;
     private String description;
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_name")
     private User user;

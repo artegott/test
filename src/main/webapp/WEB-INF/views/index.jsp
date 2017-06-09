@@ -7,10 +7,10 @@
     </div>
 </c:if>
 
-<c:if test="${shortUtl ne null}">
+<c:if test="${url.shortUrl ne null}">
     <div align="center">
         <div><span>Your link:</span></div>
-        <input type="text" id="link_short" value="${shortUtl}"/>
+        <input type="text" id="link_short" value="${url.shortUrl}"/>
     </div>
 </c:if>
 <form:form modelAttribute="url" action="urls" method="post">

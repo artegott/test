@@ -13,8 +13,7 @@ public class Tag {
     private Long id;
     @Column(nullable = false, unique = true)
     private String name;
-    @JsonIgnore
-    @ManyToMany(mappedBy = "tags", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
     private Set<Url> urls;
 
     public Tag() {

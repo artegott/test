@@ -10,6 +10,7 @@ public class UrlDto {
     @NotNull
     @NotEmpty
     private String longUrl;
+    private String shortUrl;
     private String tags;
 
     public String getName() {
@@ -42,5 +43,13 @@ public class UrlDto {
 
     public void setTags(String tags) {
         this.tags = tags;
+    }
+
+    public String getShortUrl() {
+        return shortUrl;
+    }
+
+    public void setShortUrl(String shortUrl) {
+        this.shortUrl = shortUrl;
     }
 }

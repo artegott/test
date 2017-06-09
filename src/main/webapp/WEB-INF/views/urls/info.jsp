@@ -4,19 +4,19 @@
     <br/>
     <div class="jumbotron" style="background-color: lightgray" align="center">
         <div class="jumbotron" align="center">
-            <h3 style="color: black;">Link: <span>http://localhost:8080/</span><span id="short_url"></span></h3>
+            <h3 style="color: black;">Link: <span>http://localhost:8080/</span>${url.shortUrl}<span id="short_url"></span></h3>
             <br/>
             <form class="form-horizontal">
                 <div class="form-group form-group-lg">
                     <div class="col-sm-8 input-group">
                         <div class="input-group-addon"><span>Name: </span></div>
-                        <span id="name" class="text-info form-control">${name}</span>
+                        <span id="name" class="text-info form-control">${url.name}</span>
                     </div>
                 </div>
                 <div class="form-group form-group-lg">
                     <div class="col-sm-8 input-group">
                         <div class="input-group-addon"><span>Description: </span></div>
-                        <span id="description" class="text-info form-control">${description}</span>
+                        <span id="description" class="text-info form-control">${url.description}</span>
                     </div>
                 </div>
                 <div class="form-group form-group-lg" align="center">
@@ -31,7 +31,7 @@
 </div>
 
 <script type="text/javascript">
-    var tag_array = "${tags}".split(" ");
+    var tag_array = "${url.tags}".split(",");
     var tags = "";
     for (var i = 0; i < tag_array.length; i++) {
         tags += "<a href='/tags?tag=" + tag_array[i] + "'>" + tag_array[i] + "</a> "
